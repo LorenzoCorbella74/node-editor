@@ -2,7 +2,7 @@
 
   <app-action-btns [showDelete]="showDelete()" (onAdd)="onAdd($event)" (onDelete)="onDelete()"></app-action-btns>
 
-  <div id="board" [ngClass]="{'boardDragging': isGrabbing(), 'board': !isGrabbing()}" 
+  <div id="board"  class="board" [ngClass]="{'dragging': isGrabbing()}" 
     (mousedown)="onMouseDownBoard($event)"
     (mouseup)="onMouseUpBoard($event)" 
     (mousemove)="onMouseMove($event)">
@@ -51,6 +51,5 @@
       ></app-edge>
     </ng-container>
   </div>
-
 
 </div>

@@ -1,4 +1,4 @@
-<div [class]="selected? 'nodeSelected': 'node'" [style.transform]="'translate(' + x + 'px, ' + y + 'px)'"
+<div class="node" [ngClass]="{'selected': selected}" [style.transform]="'translate(' + x + 'px, ' + y + 'px)'"
     (mousedown)="onMouseDownHandler($event)">
     <div class="inputsWrapper">
         <div *ngFor="let input of inputs; let i = index" class="input" [style.top]="(i * 20) + 'px'"

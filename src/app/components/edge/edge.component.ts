@@ -43,12 +43,12 @@ export class EdgeComponent implements OnInit {
 
 
   onMouseDownHandler(event: any) {
-    event.stopPropagation();
+    // event.stopPropagation();
     this.onMouseDownEdge.emit({ event: event });
   }
 
   onMouseDownDelete(event: any) {
-    event.stopPropagation();
+    // event.stopPropagation();
     this.onClickDelete.emit({ event: event });
   }
 

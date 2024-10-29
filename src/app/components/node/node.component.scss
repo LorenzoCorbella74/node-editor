@@ -19,24 +19,8 @@
   }
 }
 
-.nodeSelected {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  cursor: grab;
-  background-color: white;
+.selected {
   border: 2px solid #e38c29;
-  border-radius: 6px;
-  box-shadow: 1px 1px 11px -6px rgba(0, 0, 0, 0.75);
-  user-select: none;
-  z-index: 5;
-  transition: border ease 0.2s box-shadow ease 0.2s;
-  width: 120px;
-  height: 120px;
-
-  &:hover {
-    box-shadow: 2px 2px 12px -6px rgba(0, 0, 0, 0.75);
-  }
 }
 
 .inputsWrapper {

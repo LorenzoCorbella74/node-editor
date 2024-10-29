@@ -109,9 +109,10 @@ export class AppComponent {
       const boardWrapper = document.getElementById('boardWrapper');
       if (boardWrapper) {
         this.newEdge.update((edge) => {
+          let s = this.scale();
           edge!.currEndPosition.set({
-            x: (event.x + boardWrapper!.scrollLeft) / this.scale(),
-            y: (event.y + boardWrapper!.scrollTop) / this.scale()
+            x: (event.x + boardWrapper!.scrollLeft) / s,
+            y: (event.y + boardWrapper!.scrollTop) / s
           });
           return edge;
         });
@@ -195,6 +196,9 @@ export class AppComponent {
     if (node) {
       this.nodes.update((prev) => prev.filter(n => n.id !== this.selectedNode()));
       this.selectedNode.set(null);
+
+      // remove input edges
+      this.edges.update((prev) => prev.filter(e => e.nodeStartId !== node.id && e.nodeEndId !== node.id));
     } else {
       this.selectedNode.set(null);
     }
@@ -202,8 +206,8 @@ export class AppComponent {
 
   onAdd({ numberInputs, numberOutputs }: { numberInputs: number, numberOutputs: number }) {
     const randomId = Math.random().toString(36).substring(2, 8);
-    const randX = Math.random() * window.innerWidth;
-    const randY = Math.random() * window.innerHeight;
+    const randX = 0.5 * window.innerWidth;
+    const randY = 0.5 * window.innerHeight;
     const newNode = {
       id: randomId,
       numberInputs,
@@ -214,7 +218,6 @@ export class AppComponent {
       outputEdgeIds: signal([])
     }
     this.nodes.update((prev) => [...prev, newNode]);
-    console.log('add', this.nodes());
   }
 
   onMouseDownNodeHandler(id: string, event: any) {
