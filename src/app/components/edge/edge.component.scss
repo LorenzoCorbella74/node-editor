@@ -1,0 +1,68 @@
+:host {
+  display: block;
+}
+
+.wrapper{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* eventi solo sul path e non sull'intero svg */
+}
+
+
+.edge{
+  pointer-events: all; /* eventi solo sul path e non sull'intero svg */
+  stroke: rgba(168, 168, 168, 0.8);
+  stroke-width: 2;
+  fill: transparent;
+  cursor: pointer;
+  transition: all ease 0.2s;
+}
+
+.edgeSelected{
+  pointer-events: all; /* eventi solo sul path e non sull'intero svg */
+  stroke: rgb(216, 141, 62);
+  stroke-width: 3;
+  fill: transparent;
+  cursor: pointer;
+  transition: all ease 0.2s;
+}
+
+.edgeNew{
+  pointer-events: all; /* eventi solo sul path e non sull'intero svg */
+  stroke: rgba(168, 168, 168, 0.4);
+  stroke-width: 2;
+  fill: transparent;
+  cursor: pointer;
+  transition: all ease 0.2s;
+}
+
+
+.delete{
+  cursor: pointer;
+  pointer-events: all;
+  transition:all ease 0.1s;
+}
+
+.deleteHidden{
+  cursor: pointer;
+  pointer-events: none;
+  opacity: 0;
+  transition:all ease 0.1s;
+}
+
+.icon{
+  width: 26px;
+  height:20px;
+  background-color: white;
+  fill: white;
+}
+
+.circle{
+  cx:0;
+  cy:0;
+  r:14;
+  fill: rgb(175,59,59)
+}
