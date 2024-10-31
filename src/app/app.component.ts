@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal, WritableSignal } from '@angular/core';
 import { Edge, Node } from './app.models';
 import { ActionBtnsComponent } from './components/action-btns/action-btns.component';
 import { NodeComponent } from './components/node/node.component';
@@ -10,8 +10,9 @@ import { EdgeComponent } from './components/edge/edge.component';
   standalone: true,
   imports: [CommonModule, ActionBtnsComponent, NodeComponent, EdgeComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
-  
+  styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class AppComponent {
 
@@ -139,8 +140,10 @@ export class AppComponent {
           const node = this.nodes().find(n => n.id === this.selectedNode());
           if (node) {
             // update node position
-            node.currentPosition().x = (node.prevPosition().x + dx) / this.scale();
-            node.currentPosition().y = (node.prevPosition().y + dy) / this.scale();
+            node.currentPosition.set({
+              x: (node.prevPosition().x + dx) / this.scale(),
+              y: (node.prevPosition().y + dy) / this.scale()
+            });
 
             // update input edges position
             node.inputEdgeIds().forEach((edgeId) => {
@@ -241,7 +244,10 @@ export class AppComponent {
 
     const node = this.nodes().find(n => n.id === this.selectedNode());
     if (node) {
-      node.prevPosition.set({ x: node.currentPosition().x * this.scale(), y: node.currentPosition().y * this.scale() });
+      node.prevPosition.set({ 
+        x: node.currentPosition().x * this.scale(), 
+        y: node.currentPosition().y * this.scale() 
+      });
 
       // update input edges position
       node.inputEdgeIds().forEach((edgeId) => {
@@ -333,4 +339,13 @@ export class AppComponent {
 
 
 
-/* https://stackblitz.com/edit/angular-css-transform?file=src%2Fapp%2Fapp.component.html */
+/* 
+
+
+https://stackblitz.com/edit/angular-css-transform?file=src%2Fapp%2Fapp.component.html 
+
+https://stackoverflow.com/questions/60052468/very-large-nested-array-ngfor-svg-rendering-performance-issues-architecture-que
+
+
+
+*/
