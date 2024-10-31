@@ -11,8 +11,12 @@ import { EdgeComponent } from './components/edge/edge.component';
   imports: [CommonModule, ActionBtnsComponent, NodeComponent, EdgeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
+  
 })
 export class AppComponent {
+
+
+  limitmousemove = 0;
 
   isGrabbing = signal(false);
   scale = signal(1);
@@ -104,6 +108,12 @@ export class AppComponent {
   }
 
   onMouseMove(event: any) {
+    // HACK TO MAKE ANGULAR PEROFORMANT on SVG :-)
+    this.limitmousemove++;
+    if (this.limitmousemove % 2 !== 0) {
+      return;
+    }
+
     // user is setting new edge
     if (this.newEdge() !== null) {
       const boardWrapper = document.getElementById('boardWrapper');

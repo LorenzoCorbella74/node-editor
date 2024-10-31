@@ -1,8 +1,10 @@
 <svg class="wrapper">
-    <path class="{{ isNew ? 'edgeNew': selected?'edgeSelected': 'edge'}}" [attr.d]="path()"
+    <path class="edge" [ngClass]="{ 'edgeNew': isTemporary, 'edgeSelected': selected}" [attr.d]="path"
         (mousedown)="onMouseDownHandler($event)" />
+
+     <!-- DELETE ICON -->   
     <g class="{{selected?'delete':'deleteHidden'}}" 
-    [style.transform]="transformation()"
+    [style.transform]="transformation"
     
     (mousedown)="onMouseDownDelete($event)">
         <circle class="circle" />

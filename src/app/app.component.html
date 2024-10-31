@@ -6,7 +6,7 @@
     (mousedown)="onMouseDownBoard($event)"
     (mouseup)="onMouseUpBoard($event)" 
     (mousemove)="onMouseMove($event)">
-    <ng-container *ngFor="let node of nodes()">
+    @for (node of nodes(); track node.id) {
       <app-node 
       [id]="node.id" 
       [x]="node.currentPosition().x"
@@ -19,11 +19,11 @@
       (onMouseEnterInput)="onMouseEnterInputHandler($event)"
       (onMouseLeaveInput)="onMouseLeaveInputHandler($event)"
       ></app-node>
-    </ng-container>
+    }
 
     @if(newEdge()!==null){
       <app-edge 
-      [isNew]="true"
+      [isTemporary]="true"
       [selected]="false" 
       (onMouseDownEdge)="null"
       (onClickDelete)="null"
@@ -35,11 +35,11 @@
       }"
       ></app-edge>
     }
-
+    @for (edge of edges(); track edge.id) {
     <ng-container *ngFor="let edge of edges()">
        <app-edge 
       [selected]="selectedEdge() === edge.id"
-      [isNew]="false"
+      [isTemporary]="false"
       [position] = "{ 
       x0: edge.currStartPosition().x, 
       y0: edge.currStartPosition().y, 
@@ -50,6 +50,6 @@
       (onClickDelete)="onClickDeleteEdgeHandler(edge.id)"
       ></app-edge>
     </ng-container>
-  </div>
+  }
 
 </div>

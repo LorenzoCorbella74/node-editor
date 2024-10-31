@@ -2,13 +2,12 @@
     (mousedown)="onMouseDownHandler($event)">
     <div class="inputsWrapper">
         <div *ngFor="let input of inputs; let i = index" class="input" [style.top]="(i * 20) + 'px'"
-            #inputRefContainer 
             (mouseenter)="onMouseEnterInputHandler($event, input)"
             (mouseleave)="onMouseLeaveInputHandler($event, input)">
         </div>
     </div>
     <div class="outputsWrapper">
         <div *ngFor="let output of outputs; let i = index" class="output" [style.top]="(i * 20) + 'px'"
-            #outputRefContainer (mousedown)="onMouseDownOutputHandler($event, output)"></div>
+         (mousedown)="onMouseDownOutputHandler($event, output)"></div>
     </div>
 </div>
