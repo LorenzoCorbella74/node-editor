@@ -28,7 +28,7 @@ export class AppComponent {
   selectedNode: WritableSignal<string | null> = signal(null); // id del nodo selezionato
   nodes: WritableSignal<Node[]> = signal([])
 
-  newEdge: WritableSignal<Edge | null> = signal(null);
+  tempEdge: WritableSignal<Edge | null> = signal(null);
   edges: WritableSignal<Edge[]> = signal([]);
   selectedEdge: WritableSignal<string | null> = signal(null); // id dell'edge selezionato
 
@@ -55,13 +55,13 @@ export class AppComponent {
     this.isGrabbing.set(false);
 
     // se un nuovo nodo  stato settato e non stato collegato a nessun input
-    if (this.newEdge() !== null && this.insideInput() === null) {
-      this.newEdge.set(null);
+    if (this.tempEdge() !== null && this.insideInput() === null) {
+      this.tempEdge.set(null);
     }
 
-    if (this.newEdge() !== null && this.insideInput() !== null) {
+    if (this.tempEdge() !== null && this.insideInput() !== null) {
 
-      const nodeStartId = this.newEdge()!.nodeStartId;
+      const nodeStartId = this.tempEdge()!.nodeStartId;
       const nodeEndId = this.insideInput()!.nodeId;
 
       const nodeStart = this.nodes().find(n => n.id === nodeStartId);
@@ -69,31 +69,31 @@ export class AppComponent {
       const boardWrapper = document.getElementById('boardWrapper');
 
       if (nodeStart && nodeEnd && boardWrapper) {
-        let id = `edge_${nodeStart.id}_${this.newEdge()?.outputIndex}_${nodeEnd.id}_${this.insideInput()!.inputIndex}`;
+        let id = `edge_${nodeStart.id}_${this.tempEdge()?.outputIndex}_${nodeEnd.id}_${this.insideInput()!.inputIndex}`;
 
         // si aggiornano gli id
         nodeStart.outputEdgeIds.update((prev) => [...prev, id]);
         nodeEnd.inputEdgeIds.update((prev) => [...prev, id]);
 
-        this.newEdge()?.prevStartPosition.set({
-          x: (this.newEdge()!.currStartPosition().x * this.scale() + boardWrapper.scrollLeft) / this.scale(),
-          y: (this.newEdge()!.currStartPosition().y * this.scale() + boardWrapper.scrollTop) / this.scale()
+        this.tempEdge()?.prevStartPosition.set({
+          x: (this.tempEdge()!.currStartPosition().x * this.scale() + boardWrapper.scrollLeft) / this.scale(),
+          y: (this.tempEdge()!.currStartPosition().y * this.scale() + boardWrapper.scrollTop) / this.scale()
         });
 
         // si aggiorna la previuo
-        this.newEdge()?.prevEndPosition.set({
+        this.tempEdge()?.prevEndPosition.set({
           x: (this.insideInput()!.positionX + boardWrapper.scrollLeft) / this.scale(),
           y: (this.insideInput()!.positionY + boardWrapper.scrollTop) / this.scale()
         });
 
-        this.newEdge()?.currEndPosition.set({
+        this.tempEdge()?.currEndPosition.set({
           x: (this.insideInput()!.positionX + boardWrapper.scrollLeft) / this.scale(),
           y: (this.insideInput()!.positionY + boardWrapper.scrollTop) / this.scale()
         });
 
         // si aggiunge il nuovo edge
         this.edges.update((prev) => [...prev, {
-          ...this.newEdge()!,
+          ...this.tempEdge()!,
           id,
           nodeStartId: nodeStart.id,
           nodeEndId: nodeEnd.id,
@@ -101,7 +101,7 @@ export class AppComponent {
         }]);
 
         // si resetta il nuovo edge
-        this.newEdge.set(null);
+        this.tempEdge.set(null);
 
       }
     }
@@ -115,10 +115,10 @@ export class AppComponent {
     }
 
     // user is setting new edge
-    if (this.newEdge() !== null) {
+    if (this.tempEdge() !== null) {
       const boardWrapper = document.getElementById('boardWrapper');
       if (boardWrapper) {
-        this.newEdge.update((edge) => {
+        this.tempEdge.update((edge) => {
           let s = this.scale();
           edge!.currEndPosition.set({
             x: (event.x + boardWrapper!.scrollLeft) / s,
@@ -277,7 +277,7 @@ export class AppComponent {
     if (b !== null) {
       let s = this.scale();
       // create new edge
-      this.newEdge.set({
+      this.tempEdge.set({
         id: '',
         nodeStartId: event.nodeId,
         outputIndex: event.outputIndex,

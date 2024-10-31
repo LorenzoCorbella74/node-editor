@@ -21,17 +21,17 @@
       ></app-node>
     }
 
-    @if(newEdge()!==null){
+    @if(tempEdge()!==null){
       <app-edge 
       [isTemporary]="true"
       [selected]="false" 
       (onMouseDownEdge)="null"
       (onClickDelete)="null"
       [position]="{
-        x0: newEdge()!.currStartPosition().x, 
-        y0: newEdge()!.currStartPosition().y, 
-        x1: newEdge()!.currEndPosition().x, 
-        y1: newEdge()!.currEndPosition().y
+        x0: tempEdge()!.currStartPosition().x, 
+        y0: tempEdge()!.currStartPosition().y, 
+        x1: tempEdge()!.currEndPosition().x, 
+        y1: tempEdge()!.currEndPosition().y
       }"
       ></app-edge>
     }
